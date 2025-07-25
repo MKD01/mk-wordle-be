@@ -21,8 +21,8 @@ Application dependencies and versions can be found in the `package.json` file.
 - In your teminal:
 
 ```
-$ git clone https://github.com/MKD01/mk-wordle-be.git
-$ cd mk-wordle-be
+git clone https://github.com/MKD01/mk-wordle-be.git
+cd mk-wordle-be
 ```
 
 ### **Installing dependencies:**
@@ -30,13 +30,13 @@ $ cd mk-wordle-be
 - To setup the project you will need to install the required dependencies using the following command in your terminal:
 
 ```
-$ npm install
+npm install
 ```
 
 - To run the app locally, you simply need to use the following command in your terminal:
 
 ```
-$ npm run start
+npm run start
 ```
 
 # **Testing**
@@ -46,5 +46,5 @@ $ npm run start
 - To run tests the following terminal command will need to be run:
 
 ```
-$ npm run test
+npm run test
 ```
