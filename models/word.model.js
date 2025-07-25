@@ -1,10 +1,9 @@
+const { getDailyRandomNum } = require("../utils/util");
+
 exports.fetchDailyWord = () => {
   const { words } = require("../words.json");
 
-  const date = new Date();
-  const randomDailyIndex =
-    (date.getDate() * date.getMonth() * date.getFullYear()) % words.length;
-
+  const randomDailyIndex = getDailyRandomNum() % words.length;
   const dailyWord = words[randomDailyIndex];
 
   return dailyWord;
