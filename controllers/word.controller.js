@@ -1,8 +1,17 @@
-const { fetchDailyWord } = require("../models/word.model");
+const { fetchDailyWord, fetchRandomWord } = require("../models/word.model");
 
-exports.getDailyWord = async (req, res, next) => {
+exports.getDailyWord = (req, res, next) => {
   try {
     const word = fetchDailyWord();
+    res.status(200).send({ word });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getRandomWord = (req, res, next) => {
+  try {
+    const word = fetchRandomWord();
     res.status(200).send({ word });
   } catch (err) {
     next(err);

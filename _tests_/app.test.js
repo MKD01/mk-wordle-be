@@ -26,7 +26,7 @@ describe("api/unknown/endpoint", () => {
 });
 
 describe("/api/word/daily", () => {
-  it("should respond with a 5 letter daily word", () => {
+  it("should respond with a 5 letter word", () => {
     return request(app)
       .get("/api/word/daily")
       .expect(200)
@@ -34,5 +34,28 @@ describe("/api/word/daily", () => {
         expect(typeof body.word).toBe("string");
         expect(body.word.length).toBe(5);
       });
+  });
+});
+
+describe("/api/word", () => {
+  it("should return a random 5 letter word each time", () => {
+    return request(app)
+      .get("/api/word")
+      .expect(200)
+      .then(({ body }) => {
+        expect(typeof body.word).toBe("string");
+        expect(body.word.length).toBe(5);
+      });
+  });
+
+  it("should respond with a different word each time", () => {
+    const pendingWord1 = request(app).get("/api/word");
+    const pendingWord2 = request(app).get("/api/word");
+
+    return Promise.all([pendingWord1, pendingWord2]).then((responses) => {
+      const word1 = responses[0].body.word;
+      const word2 = responses[1].body.word;
+      expect(word1).not.toBe(word2);
+    });
   });
 });

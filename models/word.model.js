@@ -9,3 +9,12 @@ exports.fetchDailyWord = () => {
 
   return dailyWord;
 };
+
+exports.fetchRandomWord = () => {
+  const { words } = require("../words.json");
+
+  const randomWordIndex = Math.floor(Math.random() * words.length);
+  const randomWord = words[randomWordIndex];
+
+  return randomWord;
+};
