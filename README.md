@@ -41,7 +41,8 @@ $ npm run start
 
 # **Testing**
 
-- `Jest` & `Supertest` are the frameworks used to test this application.
+`Jest` & `Supertest` are the testing frameworks used in this project.
+
 - To run tests the following terminal command will need to be run:
 
 ```
