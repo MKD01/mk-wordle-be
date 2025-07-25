@@ -1,0 +1,14 @@
+{
+  "GET /api/word/daily": {
+    "description": "Returns a 5 letter word, which will be randomised each day",
+    "exampleResponse": {
+      "word": "laser"
+    }
+  },
+  "GET /api/word/random": {
+    "description": "Returns a random 5 letter word",
+    "exampleResponse": {
+      "word": "plant"
+    }
+  }
+}
