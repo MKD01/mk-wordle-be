@@ -30,6 +30,7 @@ describe("getDailyRandomNum", () => {
     const num2 = getDailyRandomNum();
 
     expect(num1).not.toBe(num2);
+    jest.setSystemTime(new Date("2025-01-01T00:00:00Z"));
   });
 });
 
@@ -55,6 +56,25 @@ describe("getRandomNum", () => {
 
     const num2 = getRandomNum(100);
     expect(num2).toBe(42);
+
+    Math.random.mockRestore();
+  });
+
+  it("should not return the same number as getDailyRandomNum", () => {
+    let updatedRandomNum = 2024;
+
+    const updatedRandomFun = () => {
+      updatedRandomNum++;
+      return updatedRandomNum / 10000;
+    };
+
+    jest.spyOn(Math, "random").mockImplementation(updatedRandomFun);
+
+    const randomNum = getRandomNum(10000);
+    const randomDailyNum = getDailyRandomNum();
+
+    expect(randomNum).not.toBe(randomDailyNum);
+    expect(Math.random).toHaveBeenCalledTimes(2);
 
     Math.random.mockRestore();
   });

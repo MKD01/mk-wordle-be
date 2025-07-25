@@ -7,5 +7,12 @@ exports.getDailyRandomNum = () => {
 };
 
 exports.getRandomNum = (x = 10) => {
-  return Math.floor(Math.random() * x);
+  const dailyRandomNum = this.getDailyRandomNum();
+  let randomNum = Math.floor(Math.random() * x);
+
+  while (dailyRandomNum === randomNum) {
+    randomNum = Math.floor(Math.random() * x);
+  }
+
+  return randomNum;
 };
