@@ -35,6 +35,17 @@ describe("/api/word/daily", () => {
         expect(body.word.length).toBe(5);
       });
   });
+
+  it("should respond with the same word each time (which is changes daily)", () => {
+    const pendingWord1 = request(app).get("/api/word/daily");
+    const pendingWord2 = request(app).get("/api/word/daily");
+
+    return Promise.all([pendingWord1, pendingWord2]).then((responses) => {
+      const word1 = responses[0].body.word;
+      const word2 = responses[1].body.word;
+      expect(word1).toBe(word2);
+    });
+  });
 });
 
 describe("/api/word", () => {
