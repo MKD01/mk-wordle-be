@@ -5,7 +5,7 @@
       "word": "laser"
     }
   },
-  "GET /api/word/random": {
+  "GET /api/word": {
     "description": "Returns a random 5 letter word",
     "exampleResponse": {
       "word": "plant"
