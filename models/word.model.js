@@ -1,4 +1,4 @@
-const { getDailyRandomNum } = require("../utils/util");
+const { getDailyRandomNum, getRandomNum } = require("../utils/util");
 
 exports.fetchDailyWord = () => {
   const { words } = require("../words.json");
@@ -12,7 +12,7 @@ exports.fetchDailyWord = () => {
 exports.fetchRandomWord = () => {
   const { words } = require("../words.json");
 
-  const randomWordIndex = Math.floor(Math.random() * words.length);
+  const randomWordIndex = getRandomNum(words.length);
   const randomWord = words[randomWordIndex];
 
   return randomWord;

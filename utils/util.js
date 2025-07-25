@@ -5,3 +5,7 @@ exports.getDailyRandomNum = () => {
 
   return dailyRandomNum;
 };
+
+exports.getRandomNum = (x = 10) => {
+  return Math.floor(Math.random() * x);
+};
