@@ -13,3 +13,15 @@ describe("/api", () => {
       });
   });
 });
+
+describe("/api/word/daily", () => {
+  it("should respond with a 5 letter daily word", () => {
+    return request(app)
+      .get("/api/word/daily")
+      .expect(200)
+      .then(({ body }) => {
+        expect(typeof body.word).toBe("string");
+        expect(body.word.length).toBe(5);
+      });
+  });
+});
