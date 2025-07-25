@@ -33,12 +33,6 @@ cd mk-wordle-be
 npm install
 ```
 
-- To run the app locally, you simply need to use the following command in your terminal:
-
-```
-npm run start
-```
-
 # **Testing**
 
 `Jest` & `Supertest` are the testing frameworks used in this project.
@@ -47,4 +41,27 @@ npm run start
 
 ```
 npm run test
+```
+
+---
+
+# **Running the app locally**
+
+- To run the app locally, you simply need to use the following command in your terminal:
+
+```
+npm run start
+```
+
+To view the endpoints you can use any browser to navigate to
+
+```
+http://localhost:9090/api
+```
+
+followed by any specific endpoint you wish to see.
+E.G
+
+```
+http://localhost:9090/api/word/daily
 ```
