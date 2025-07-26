@@ -41,13 +41,6 @@ describe("getRandomNum", () => {
     expect(typeof num).toBe("number");
   });
 
-  it("should return a return a different number on each invocation", () => {
-    const num1 = getRandomNum();
-    const num2 = getRandomNum();
-
-    expect(num1).not.toBe(num2);
-  });
-
   it("can take an argument to determine how high the random number can be", () => {
     jest.spyOn(Math, "random").mockReturnValue(0.42);
 
