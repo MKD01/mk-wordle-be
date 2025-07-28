@@ -6,7 +6,7 @@
 
 ## **Description**
 
-A simple express app build to generate random 5 letter words. Details of the endpoints can be found in the `endpoints.json` file.
+A simple api to re-create a wordle-like game, built to allow users to attempt a daily word using post requests, as well as trying to solve other words using a combination of some of the other endpoints. Details of the endpoints can be found in the `endpoints.json` file.
 
 ---
 
