@@ -5,6 +5,21 @@
       "word": "laser"
     }
   },
+  "POST /api/word/daily": {
+    "describe": "Takes a 5 letter word and responds with an array of each letter and if it is a valid letter and/or if it is in the correct position when compared to the daily word of that day",
+    "exampleBody": {
+      "word": "smelt"
+    },
+    "exampleResponse": {
+      "letters": [
+        { "char": "s", "isValidChar": true, "isValidPosition": true },
+        { "char": "m", "isValidChar": true, "isValidPosition": false },
+        { "char": "e", "isValidChar": false, "isValidPosition": false },
+        { "char": "l", "isValidChar": false, "isValidPosition": false },
+        { "char": "t", "isValidChar": true, "isValidPosition": false }
+      ]
+    }
+  },
   "GET /api/word": {
     "description": "Returns a random 5 letter word",
     "exampleResponse": {
