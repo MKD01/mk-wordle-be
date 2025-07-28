@@ -20,10 +20,10 @@
       ]
     }
   },
-  "GET /api/word": {
-    "description": "Returns a random 5 letter word",
+  "GET /api/word/id": {
+    "description": "Returns a random wordId",
     "exampleResponse": {
-      "word": "plant"
+      "wordId": 134
     }
   }
 }

@@ -27,11 +27,10 @@ exports.attemptDailyWord = (wordAttempt, dailyWord) => {
   return { letters: validatedChars };
 };
 
-exports.fetchRandomWord = () => {
+exports.fetchRandomWordId = () => {
   const { words } = require("../words.json");
 
   const randomWordIndex = getRandomNum(words.length);
-  const randomWord = words[randomWordIndex];
 
-  return randomWord;
+  return randomWordIndex;
 };

@@ -3,7 +3,7 @@ const { getEndpoints } = require("./controllers/api.controller");
 const {
   getDailyWord,
   postDailyWord,
-  getRandomWord,
+  getRandomWordId,
 } = require("./controllers/word.controller");
 
 const app = express();
@@ -16,7 +16,7 @@ app.get("/api/word/daily", getDailyWord);
 
 app.post("/api/word/daily", postDailyWord);
 
-app.get("/api/word", getRandomWord);
+app.get("/api/word/id", getRandomWordId);
 
 app.use((req, res) => {
   res.status(404).send({ msg: "Page Not Found" });

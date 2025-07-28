@@ -1,6 +1,6 @@
 const {
   fetchDailyWord,
-  fetchRandomWord,
+  fetchRandomWordId,
   attemptDailyWord,
 } = require("../models/word.model");
 
@@ -26,10 +26,10 @@ exports.postDailyWord = (req, res, next) => {
   }
 };
 
-exports.getRandomWord = (req, res, next) => {
+exports.getRandomWordId = (req, res, next) => {
   try {
-    const word = fetchRandomWord();
-    res.status(200).send({ word });
+    const wordId = fetchRandomWordId();
+    res.status(200).send({ wordId });
   } catch (err) {
     next(err);
   }
