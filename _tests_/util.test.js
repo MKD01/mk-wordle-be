@@ -1,14 +1,18 @@
-const { getDailyRandomNum, getRandomNum } = require("../utils/util");
-
-beforeAll(() => {
-  jest.useFakeTimers().setSystemTime(new Date("2025-01-01T00:00:00Z"));
-});
-
-afterAll(() => {
-  jest.useRealTimers();
-});
+const {
+  getDailyRandomNum,
+  getRandomNum,
+  validateWord,
+} = require("../utils/util");
 
 describe("getDailyRandomNum", () => {
+  beforeEach(() => {
+    jest.useFakeTimers().setSystemTime(new Date("2025-01-01T00:00:00Z"));
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   it("should return a number", () => {
     const num = getDailyRandomNum();
 
@@ -35,6 +39,14 @@ describe("getDailyRandomNum", () => {
 });
 
 describe("getRandomNum", () => {
+  beforeAll(() => {
+    jest.useFakeTimers().setSystemTime(new Date("2025-01-01T00:00:00Z"));
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   it("should return a number", () => {
     const num = getRandomNum();
 
@@ -70,5 +82,92 @@ describe("getRandomNum", () => {
     expect(Math.random).toHaveBeenCalledTimes(2);
 
     Math.random.mockRestore();
+  });
+});
+
+describe("validateWord", () => {
+  it("should return an array of objects for each character of an attempt word that is validated against a word to be guessed", () => {
+    const attemptWord = "spelt";
+    const wordToGuess = "bound";
+
+    const output = validateWord(attemptWord, wordToGuess);
+
+    const expectedOutput = [
+      { char: "s", isValidChar: false, isValidPosition: false },
+      { char: "p", isValidChar: false, isValidPosition: false },
+      { char: "e", isValidChar: false, isValidPosition: false },
+      { char: "l", isValidChar: false, isValidPosition: false },
+      { char: "t", isValidChar: false, isValidPosition: false },
+    ];
+
+    expect(output).toEqual(expectedOutput);
+  });
+
+  it("should correctly show all characters match when the words are the same", () => {
+    const attemptWord = "smelt";
+    const wordToGuess = "smelt";
+
+    const output = validateWord(attemptWord, wordToGuess);
+
+    const expectedOutput = [
+      { char: "s", isValidChar: true, isValidPosition: true },
+      { char: "m", isValidChar: true, isValidPosition: true },
+      { char: "e", isValidChar: true, isValidPosition: true },
+      { char: "l", isValidChar: true, isValidPosition: true },
+      { char: "t", isValidChar: true, isValidPosition: true },
+    ];
+
+    expect(output).toEqual(expectedOutput);
+  });
+
+  it("should correctly show the characters that are valid and in the right position with atleast one character that is not", () => {
+    const attemptWord = "spelt";
+    const wordToGuess = "smelt";
+
+    const output = validateWord(attemptWord, wordToGuess);
+
+    const expectedOutput = [
+      { char: "s", isValidChar: true, isValidPosition: true },
+      { char: "p", isValidChar: false, isValidPosition: false },
+      { char: "e", isValidChar: true, isValidPosition: true },
+      { char: "l", isValidChar: true, isValidPosition: true },
+      { char: "t", isValidChar: true, isValidPosition: true },
+    ];
+
+    expect(output).toEqual(expectedOutput);
+  });
+
+  it("should correctly show characters that are valid but not in the correct positions", () => {
+    const attemptWord = "telms";
+    const wordToGuess = "smelt";
+
+    const output = validateWord(attemptWord, wordToGuess);
+
+    const expectedOutput = [
+      { char: "t", isValidChar: true, isValidPosition: false },
+      { char: "e", isValidChar: true, isValidPosition: false },
+      { char: "l", isValidChar: true, isValidPosition: false },
+      { char: "m", isValidChar: true, isValidPosition: false },
+      { char: "s", isValidChar: true, isValidPosition: false },
+    ];
+
+    expect(output).toEqual(expectedOutput);
+  });
+
+  it("should correctly show a mix of characters that are valid but not in the correct positions, characters that are valid and in the right positon and incorrect characters", () => {
+    const attemptWord = "smled";
+    const wordToGuess = "smelt";
+
+    const output = validateWord(attemptWord, wordToGuess);
+
+    const expectedOutput = [
+      { char: "s", isValidChar: true, isValidPosition: true },
+      { char: "m", isValidChar: true, isValidPosition: true },
+      { char: "l", isValidChar: true, isValidPosition: false },
+      { char: "e", isValidChar: true, isValidPosition: false },
+      { char: "d", isValidChar: false, isValidPosition: false },
+    ];
+
+    expect(output).toEqual(expectedOutput);
   });
 });
