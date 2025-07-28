@@ -2,7 +2,7 @@ const express = require("express");
 const { getEndpoints } = require("./controllers/api.controller");
 const {
   getDailyWord,
-  postDailyWord,
+  submitDailyWord,
   getRandomWordId,
 } = require("./controllers/word.controller");
 
@@ -14,7 +14,7 @@ app.get("/api", getEndpoints);
 
 app.get("/api/word/daily", getDailyWord);
 
-app.post("/api/word/daily", postDailyWord);
+app.post("/api/word/daily", submitDailyWord);
 
 app.get("/api/word/id", getRandomWordId);
 

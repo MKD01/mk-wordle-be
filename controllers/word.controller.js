@@ -13,7 +13,7 @@ exports.getDailyWord = (req, res, next) => {
   }
 };
 
-exports.postDailyWord = (req, res, next) => {
+exports.submitDailyWord = (req, res, next) => {
   try {
     const wordAttempt = req.body.word;
     const dailyWord = fetchDailyWord();
