@@ -6,6 +6,11 @@ const {
   getRandomWordId,
   submitWordById,
 } = require("./controllers/word.controller");
+const {
+  customErrorHandler,
+  serverErrorHandler,
+  invalidPathHandler,
+} = require("./middleware/errors");
 
 const app = express();
 
@@ -21,20 +26,10 @@ app.get("/api/word/id", getRandomWordId);
 
 app.post("/api/word/:wordId", submitWordById);
 
-app.use((req, res) => {
-  res.status(404).send({ msg: "Page Not Found" });
-});
+app.use(invalidPathHandler);
 
-app.use((err, req, res, next) => {
-  if (err.status && err.msg) {
-    res.status(err.status).send({ msg: err.msg });
-  } else {
-    next(err);
-  }
-});
+app.use(customErrorHandler);
 
-app.use((err, req, res, next) => {
-  res.status(500).send({ error: "Server Error" });
-});
+app.use(serverErrorHandler);
 
 module.exports = app;
