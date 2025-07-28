@@ -47,6 +47,112 @@ describe("/api/word/id", () => {
       });
     });
   });
+
+  describe("POST", () => {
+    it("should take a valid word and a word id, and respond with if any letters are correct/in the right positions", () => {
+      const postBody = { word: "glide" };
+
+      return request(app)
+        .post("/api/word/123")
+        .send(postBody)
+        .expect(201)
+        .then(({ body }) => {
+          const expectedOutput = {
+            letters: [
+              { char: "g", isValidChar: false, isValidPosition: false },
+              { char: "l", isValidChar: false, isValidPosition: false },
+              { char: "i", isValidChar: false, isValidPosition: false },
+              { char: "d", isValidChar: false, isValidPosition: false },
+              { char: "e", isValidChar: true, isValidPosition: false },
+            ],
+          };
+
+          expect(body.attempt).toEqual(expectedOutput);
+        });
+    });
+
+    it("when give the matching word to the word id given, the response should show all matching letters", () => {
+      const postBody = { word: "heavy" };
+
+      return request(app)
+        .post("/api/word/123")
+        .send(postBody)
+        .expect(201)
+        .then(({ body }) => {
+          const expectedOutput = {
+            letters: [
+              { char: "h", isValidChar: true, isValidPosition: true },
+              { char: "e", isValidChar: true, isValidPosition: true },
+              { char: "a", isValidChar: true, isValidPosition: true },
+              { char: "v", isValidChar: true, isValidPosition: true },
+              { char: "y", isValidChar: true, isValidPosition: true },
+            ],
+          };
+
+          expect(body.attempt).toEqual(expectedOutput);
+        });
+    });
+
+    it("should respond with a 404 for a wordId that is valid but does not exist", () => {
+      const postBody = { word: "heavy" };
+
+      return request(app)
+        .post("/api/word/999999")
+        .send(postBody)
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toEqual("wordId not found");
+        });
+    });
+
+    it("should respond with a 400 for a wordId that is invalid", () => {
+      const postBody = { word: "heavy" };
+
+      return request(app)
+        .post("/api/word/banana")
+        .send(postBody)
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).toEqual("wordId not valid");
+        });
+    });
+
+    it("should respond with a 400 when given a word that is not 5 letters", () => {
+      const postBody = { word: "heavyy" };
+
+      return request(app)
+        .post("/api/word/123")
+        .send(postBody)
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).toEqual("Invalid word length");
+        });
+    });
+
+    it("should respond with a 400 when given an invalid word", () => {
+      const postBody = { word: 23 };
+
+      return request(app)
+        .post("/api/word/123")
+        .send(postBody)
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).toEqual("Invalid word");
+        });
+    });
+
+    it("should respond with a 400 when wors is not provided", () => {
+      const postBody = {};
+
+      return request(app)
+        .post("/api/word/123")
+        .send(postBody)
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).toEqual("Invalid word");
+        });
+    });
+  });
 });
 
 describe("/api/word/daily", () => {
@@ -156,7 +262,7 @@ describe("/api/word/daily", () => {
         .send(postBody)
         .expect(400)
         .then(({ body }) => {
-          expect(body.err).toBe("Invalid word length");
+          expect(body.msg).toBe("Invalid word length");
         });
     });
 
@@ -168,7 +274,7 @@ describe("/api/word/daily", () => {
         .send(postBody)
         .expect(400)
         .then(({ body }) => {
-          expect(body.err).toBe("Invalid word length");
+          expect(body.msg).toBe("Invalid word length");
         });
     });
 
@@ -180,7 +286,7 @@ describe("/api/word/daily", () => {
         .send(postBody)
         .expect(400)
         .then(({ body }) => {
-          expect(body.err).toBe("Invalid word");
+          expect(body.msg).toBe("Invalid word");
         });
     });
 
@@ -192,7 +298,7 @@ describe("/api/word/daily", () => {
         .send(postBody)
         .expect(400)
         .then(({ body }) => {
-          expect(body.err).toBe("Invalid word");
+          expect(body.msg).toBe("Invalid word");
         });
     });
   });

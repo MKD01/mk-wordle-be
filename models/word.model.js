@@ -13,7 +13,7 @@ exports.fetchDailyWord = () => {
   return dailyWord;
 };
 
-exports.attemptDailyWord = (wordAttempt, dailyWord) => {
+exports.attemptWord = (wordAttempt, wordToGuess) => {
   if (typeof wordAttempt !== "string") {
     throw { status: 400, msg: "Invalid word" };
   }
@@ -22,7 +22,7 @@ exports.attemptDailyWord = (wordAttempt, dailyWord) => {
     throw { status: 400, msg: "Invalid word length" };
   }
 
-  const validatedChars = validateWord(wordAttempt, dailyWord);
+  const validatedChars = validateWord(wordAttempt, wordToGuess);
 
   return { letters: validatedChars };
 };
@@ -33,4 +33,19 @@ exports.fetchRandomWordId = () => {
   const randomWordIndex = getRandomNum(words.length);
 
   return randomWordIndex;
+};
+
+exports.getWordById = (id) => {
+  const { words } = require("../words.json");
+
+  if (typeof id !== "string" && isNaN(+id)) {
+    throw { status: 400, msg: "wordId not valid" };
+  }
+
+  if (words.length <= id) {
+    throw { status: 404, msg: "wordId not found" };
+  }
+
+  const word = words[id];
+  return word;
 };

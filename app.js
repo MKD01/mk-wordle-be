@@ -4,6 +4,7 @@ const {
   getDailyWord,
   submitDailyWord,
   getRandomWordId,
+  submitWordById,
 } = require("./controllers/word.controller");
 
 const app = express();
@@ -18,13 +19,15 @@ app.post("/api/word/daily", submitDailyWord);
 
 app.get("/api/word/id", getRandomWordId);
 
+app.post("/api/word/:wordId", submitWordById);
+
 app.use((req, res) => {
   res.status(404).send({ msg: "Page Not Found" });
 });
 
 app.use((err, req, res, next) => {
   if (err.status && err.msg) {
-    res.status(err.status).send({ err: err.msg });
+    res.status(err.status).send({ msg: err.msg });
   } else {
     next(err);
   }
