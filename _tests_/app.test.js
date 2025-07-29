@@ -85,6 +85,36 @@ describe("/api/wordIds", () => {
 });
 
 describe("/api/word/:wordId", () => {
+  describe("GET", () => {
+    it("should respond with a 5 letter word", () => {
+      return request(app)
+        .get("/api/word/123")
+        .expect(200)
+        .then(({ body }) => {
+          expect(typeof body.word).toBe("string");
+          expect(body.word.length).toBe(5);
+        });
+    });
+
+    it("should respond with a 404 for a wordId that is valid but does not exist", () => {
+      return request(app)
+        .get("/api/word/99999")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe("wordId not found");
+        });
+    });
+
+    it("should respond with a 400 when given an invalid wordId", () => {
+      return request(app)
+        .get("/api/word/banana")
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).toBe("Invalid wordId");
+        });
+    });
+  });
+
   describe("POST", () => {
     it("should take a valid word and a word id, and respond with if any letters are correct/in the right positions", () => {
       const postBody = { word: "glide" };
@@ -150,7 +180,7 @@ describe("/api/word/:wordId", () => {
         .send(postBody)
         .expect(400)
         .then(({ body }) => {
-          expect(body.msg).toEqual("wordId not valid");
+          expect(body.msg).toEqual("Invalid wordId");
         });
     });
 
@@ -204,7 +234,7 @@ describe("/api/word/daily", () => {
         });
     });
 
-    it("should respond with the same word each time (which is changes daily)", () => {
+    it("should respond with the same word each time (which is changed daily)", () => {
       const pendingWord1 = request(app).get("/api/word/daily");
       const pendingWord2 = request(app).get("/api/word/daily");
 

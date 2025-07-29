@@ -5,6 +5,7 @@ const {
   submitDailyWord,
   getRandomWordIds,
   submitWordById,
+  getWordById,
 } = require("./controllers/word.controller");
 const {
   customErrorHandler,
@@ -23,6 +24,8 @@ app.get("/api/word/daily", getDailyWord);
 app.post("/api/word/daily", submitDailyWord);
 
 app.get("/api/wordIds", getRandomWordIds);
+
+app.get("/api/word/:wordId", getWordById);
 
 app.post("/api/word/:wordId", submitWordById);
 

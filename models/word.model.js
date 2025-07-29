@@ -53,7 +53,7 @@ exports.fetchWordById = (id) => {
   const { words } = require("../words.json");
 
   if (typeof id !== "string" && isNaN(+id)) {
-    throw { status: 400, msg: "wordId not valid" };
+    throw { status: 400, msg: "Invalid wordId" };
   }
 
   if (words.length <= id) {

@@ -20,14 +20,19 @@
       ]
     }
   },
-  "GET /api/word/ids": {
+  "GET /api/wordIds": {
     "query": ["q"],
     "description": "Returns an array of random wordIds, and can take a quantity (q) query to determine the number of wordIds to be given, up to a maximum of 10",
     "exampleResponse": {
       "wordIds": [134]
     }
   },
-
+  "GET /api/word/:wordId": {
+    "description": "Returns a 5 letter word by the given wordId",
+    "exampleResponse": {
+      "word": "smile"
+    }
+  },
   "POST /api/word/:wordId": {
     "describe": "Takes a 5 letter word and responds with an array of each letter and if it is a valid letter and/or if it is in the correct position when compared to a word from the given wordId",
     "exampleBody": {
