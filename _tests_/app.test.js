@@ -14,10 +14,10 @@ describe("/api", () => {
   });
 });
 
-describe("api/unknown/endpoint", () => {
+describe("api/invalid/endpoint", () => {
   it("should respond with 404 page not found, for any invalid endpoint", () => {
     return request(app)
-      .get("/api/unknown")
+      .get("/api/invalid")
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("Page Not Found");
