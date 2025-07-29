@@ -27,12 +27,26 @@ exports.attemptWord = (wordAttempt, wordToGuess) => {
   return { letters: validatedChars };
 };
 
-exports.fetchRandomWordId = () => {
+exports.fetchRandomWordIds = (quantity = 1) => {
   const { words } = require("../words.json");
+  const wordIndexs = [];
 
-  const randomWordIndex = getRandomNum(words.length);
+  if (isNaN(+quantity)) {
+    throw { status: 400, msg: "Bad request" };
+  }
 
-  return randomWordIndex;
+  if (quantity > 10) quantity = 10;
+
+  while (quantity > 0) {
+    const randomWordIndex = getRandomNum(words.length);
+
+    if (!wordIndexs.includes(randomWordIndex)) {
+      wordIndexs.push(randomWordIndex);
+      quantity--;
+    }
+  }
+
+  return wordIndexs;
 };
 
 exports.fetchWordById = (id) => {

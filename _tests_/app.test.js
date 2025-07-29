@@ -27,24 +27,59 @@ describe("api/unknown/endpoint", () => {
 
 describe("/api/word", () => {
   describe("GET /id", () => {
-    it("should return a random word id which is a number", () => {
+    it("should respond with an array of random word id's, defaulting to a single id in the array", () => {
       return request(app)
-        .get("/api/word/id")
+        .get("/api/word/ids")
         .expect(200)
         .then(({ body }) => {
-          expect(typeof body.wordId).toBe("number");
+          expect(body.wordIds.length).toBe(1);
+          expect(typeof body.wordIds[0]).toBe("number");
         });
     });
 
-    it("should respond with a different word id each time", () => {
-      const pendingWord1 = request(app).get("/api/word/id");
-      const pendingWord2 = request(app).get("/api/word/id");
+    it("should respond with two different word id's when given a quantity (q) query of 2", () => {
+      return request(app)
+        .get("/api/word/ids?q=2")
+        .then(({ body }) => {
+          expect(body.wordIds.length).toBe(2);
 
-      return Promise.all([pendingWord1, pendingWord2]).then((responses) => {
-        const word1 = responses[0].body.wordId;
-        const word2 = responses[1].body.wordId;
-        expect(word1).not.toBe(word2);
-      });
+          body.wordIds.forEach((wordId) => {
+            expect(typeof wordId).toBe("number");
+          });
+
+          expect(body.wordIds[0]).not.toBe(body.wordIds[1]);
+        });
+    });
+
+    it("should respond with a maximum of 10 unique word id's when given a quantity (q) query of 10 or greater", () => {
+      return request(app)
+        .get("/api/word/ids?q=15")
+        .then(({ body }) => {
+          expect(body.wordIds.length).toBe(10);
+
+          const wordIdLookup = {};
+
+          body.wordIds.forEach((wordId) => {
+            if (wordIdLookup[wordId]) {
+              wordIdLookup[wordId]++;
+            } else {
+              wordIdLookup[wordId] = 1;
+            }
+          });
+
+          Object.keys(wordIdLookup).forEach((wordId) => {
+            expect(wordIdLookup[wordId]).toBe(1);
+          });
+        });
+    });
+
+    it("should respond with a 400 error message when the quantity (q) query is an invalid value", () => {
+      return request(app)
+        .get("/api/word/ids?q=banana")
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).toBe("Bad request");
+        });
     });
   });
 

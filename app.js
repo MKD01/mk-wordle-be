@@ -3,7 +3,7 @@ const { getEndpoints } = require("./controllers/api.controller");
 const {
   getDailyWord,
   submitDailyWord,
-  getRandomWordId,
+  getRandomWordIds,
   submitWordById,
 } = require("./controllers/word.controller");
 const {
@@ -22,7 +22,7 @@ app.get("/api/word/daily", getDailyWord);
 
 app.post("/api/word/daily", submitDailyWord);
 
-app.get("/api/word/id", getRandomWordId);
+app.get("/api/word/ids", getRandomWordIds);
 
 app.post("/api/word/:wordId", submitWordById);
 

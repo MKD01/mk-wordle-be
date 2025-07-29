@@ -20,10 +20,11 @@
       ]
     }
   },
-  "GET /api/word/id": {
-    "description": "Returns a random wordId",
+  "GET /api/word/ids": {
+    "query": ["q"],
+    "description": "Returns an array of random wordIds, and can take a quantity (q) query to determine the number of wordIds to be given, up to a maximum of 10",
     "exampleResponse": {
-      "wordId": 134
+      "wordIds": [134]
     }
   },
 
