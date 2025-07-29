@@ -6,7 +6,7 @@
     }
   },
   "POST /api/word/daily": {
-    "describe": "Takes a 5 letter word and responds with an array of each letter and if it is a valid letter and/or if it is in the correct position when compared to the daily word of that day",
+    "description": "Receives a 5 letter word and returns an array indicating, for each letter, whether it exists and/or is in the correct position in the daily word",
     "exampleBody": {
       "word": "smelt"
     },
@@ -28,13 +28,13 @@
     }
   },
   "GET /api/word/:wordId": {
-    "description": "Returns a 5 letter word by the given wordId",
+    "description": "Returns a 5 letter word for the given wordId",
     "exampleResponse": {
       "word": "smile"
     }
   },
   "POST /api/word/:wordId": {
-    "describe": "Takes a 5 letter word and responds with an array of each letter and if it is a valid letter and/or if it is in the correct position when compared to a word from the given wordId",
+    "description": "Receives a 5 letter word and returns an array indicating, for each letter, whether it exists and/or is in the correct position in the target word from the given wordId",
     "exampleBody": {
       "word": "smelt"
     },
