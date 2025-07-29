@@ -25,8 +25,8 @@ describe("api/unknown/endpoint", () => {
   });
 });
 
-describe("/api/word/id", () => {
-  describe("GET", () => {
+describe("/api/word", () => {
+  describe("GET /id", () => {
     it("should return a random word id which is a number", () => {
       return request(app)
         .get("/api/word/id")
@@ -48,7 +48,7 @@ describe("/api/word/id", () => {
     });
   });
 
-  describe("POST", () => {
+  describe("POST /:wordId", () => {
     it("should take a valid word and a word id, and respond with if any letters are correct/in the right positions", () => {
       const postBody = { word: "glide" };
 
