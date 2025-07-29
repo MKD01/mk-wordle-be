@@ -1,7 +1,7 @@
 const {
   fetchDailyWord,
   fetchRandomWordId,
-  getWordById,
+  fetchWordById,
   attemptWord,
 } = require("../models/word.model");
 
@@ -41,7 +41,7 @@ exports.submitWordById = (req, res, next) => {
     const { wordId } = req.params;
     const wordAttempt = req.body.word;
 
-    const wordToGuess = getWordById(+wordId);
+    const wordToGuess = fetchWordById(+wordId);
     const attempt = attemptWord(wordAttempt, wordToGuess);
 
     res.status(201).send({ attempt });

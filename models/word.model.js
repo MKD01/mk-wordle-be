@@ -35,7 +35,7 @@ exports.fetchRandomWordId = () => {
   return randomWordIndex;
 };
 
-exports.getWordById = (id) => {
+exports.fetchWordById = (id) => {
   const { words } = require("../words.json");
 
   if (typeof id !== "string" && isNaN(+id)) {
