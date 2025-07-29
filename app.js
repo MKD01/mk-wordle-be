@@ -22,7 +22,7 @@ app.get("/api/word/daily", getDailyWord);
 
 app.post("/api/word/daily", submitDailyWord);
 
-app.get("/api/word/ids", getRandomWordIds);
+app.get("/api/wordIds", getRandomWordIds);
 
 app.post("/api/word/:wordId", submitWordById);
 

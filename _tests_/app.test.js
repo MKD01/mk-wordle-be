@@ -25,11 +25,11 @@ describe("api/unknown/endpoint", () => {
   });
 });
 
-describe("/api/word", () => {
-  describe("GET /id", () => {
+describe("/api/wordIds", () => {
+  describe("GET", () => {
     it("should respond with an array of random word id's, defaulting to a single id in the array", () => {
       return request(app)
-        .get("/api/word/ids")
+        .get("/api/wordIds")
         .expect(200)
         .then(({ body }) => {
           expect(body.wordIds.length).toBe(1);
@@ -39,7 +39,7 @@ describe("/api/word", () => {
 
     it("should respond with two different word id's when given a quantity (q) query of 2", () => {
       return request(app)
-        .get("/api/word/ids?q=2")
+        .get("/api/wordIds?q=2")
         .then(({ body }) => {
           expect(body.wordIds.length).toBe(2);
 
@@ -53,7 +53,7 @@ describe("/api/word", () => {
 
     it("should respond with a maximum of 10 unique word id's when given a quantity (q) query of 10 or greater", () => {
       return request(app)
-        .get("/api/word/ids?q=15")
+        .get("/api/wordIds?q=15")
         .then(({ body }) => {
           expect(body.wordIds.length).toBe(10);
 
@@ -75,15 +75,17 @@ describe("/api/word", () => {
 
     it("should respond with a 400 error message when the quantity (q) query is an invalid value", () => {
       return request(app)
-        .get("/api/word/ids?q=banana")
+        .get("/api/wordIds?q=banana")
         .expect(400)
         .then(({ body }) => {
           expect(body.msg).toBe("Bad request");
         });
     });
   });
+});
 
-  describe("POST /:wordId", () => {
+describe("/api/word/:wordId", () => {
+  describe("POST", () => {
     it("should take a valid word and a word id, and respond with if any letters are correct/in the right positions", () => {
       const postBody = { word: "glide" };
 
